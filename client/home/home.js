@@ -9,7 +9,7 @@ $(window).scroll(function () {
    }); 
 });
 $(function(){
-
+	var hideArrow = 300;
 	var shrinkHeader = 100;
 	$(window).scroll(function() {
 		var scroll = getCurrentScroll();
@@ -17,6 +17,11 @@ $(function(){
 			$('.header').addClass('shrink');
 		}else {
 			$('.header').removeClass('shrink');
+		}
+		if ( scroll >= hideArrow ) {
+			$('.leftArrow, .rightArrow').hide(250);
+		}else {
+			$('.leftArrow, .rightArrow').show(250);
 		}
 	});
 	function getCurrentScroll() {
@@ -40,13 +45,17 @@ Template.home.helpers({
 
 Template.home.events({
 	'click .leftArrow': function(){
-		if(parseInt($('.carousel ul').css('margin-left')) < 0){
-			$('.carousel ul').css('margin-left', (parseInt($('.carousel ul').css('margin-left')) + $(window).width()+20) + 'px');
+		var width = $(window).width()+20;
+		var marginLeft = parseInt($('.carousel ul').css('margin-left'));
+		if(marginLeft < 0){
+			$('.carousel ul').css('margin-left', (marginLeft + width) + 'px');
 		}
 	},
 	'click .rightArrow': function(){
-		if(parseInt($('.carousel ul').css('margin-left')) > -2000){
-			$('.carousel ul').css('margin-left', (parseInt($('.carousel ul').css('margin-left')) - $(window).width()-20) + 'px');
+		var width = $(window).width()+20;
+		var marginLeft = parseInt($('.carousel ul').css('margin-left'));
+		if(marginLeft > -(width*2)){
+			$('.carousel ul').css('margin-left', (marginLeft - width) + 'px');
 		}
 	}
 })
